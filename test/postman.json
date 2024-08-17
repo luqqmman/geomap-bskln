@@ -1,0 +1,103 @@
+{
+    "info": {
+      "name": "Negara API Collection",
+      "_postman_id": "lqm1337",
+      "description": "Collection for testing CRUD operations for the Negara API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "GET all negara",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "url": {
+            "raw": "http://localhost:3000/api/negara",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "3000",
+            "path": ["api", "negara"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "POST new negara",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"namaNegara\": \"Vietnam\",\"kodeNegara\": \"VN\",\"idKawasan\": 2,\"idDirektorat\": 4}"
+          },
+          "url": {
+            "raw": "http://localhost:3000/api/negara",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "3000",
+            "path": ["api", "negara"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "PUT update negara",
+        "request": {
+          "method": "PUT",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"idNegara\": 1,\"namaNegara\": \"Vietnam Updated\",\"kodeNegara\": \"VN\",\"idKawasan\": 2,\"idDirektorat\": 4}"
+          },
+          "url": {
+            "raw": "http://localhost:3000/api/negara",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "3000",
+            "path": ["api", "negara"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "DELETE negara",
+        "request": {
+          "method": "DELETE",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"idNegara\": 1}"
+          },
+          "url": {
+            "raw": "http://localhost:3000/api/negara",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "3000",
+            "path": ["api", "negara"]
+          }
+        },
+        "response": []
+      }
+    ]
+  }
+345  

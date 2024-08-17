@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+ 
+datasource db {
+  provider = "postgresql"
+  // Uses connection pooling
+  url = env("POSTGRES_PRISMA_URL")
+  // Uses direct connection, ⚠️ make sure to keep this to `POSTGRES_URL_NON_POOLING`
+  // or you'll have dangling databases from migrations
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Direktorat {
+  id           Int       @id @default(autoincrement()) @map("Id_Direktorat")
+  namaDirektorat String  @map("Nama_Direktorat")
+  createdAt    DateTime  @default(now()) @map("Created_At")
+  updatedAt    DateTime  @updatedAt @map("Updated_At")
+  
+  negara       Negara[]
+  kawasan      Kawasan[]
+}
+
+model Kawasan {
+  id           Int       @id @default(autoincrement()) @map("Id_Kawasan")
+  namaKawasan  String    @map("Nama_Kawasan")
+  createdAt    DateTime  @default(now()) @map("Created_At")
+  updatedAt    DateTime  @updatedAt @map("Updated_At")
+
+  idDirektorat Int       @map("Id_Direktorat")
+  direktorat   Direktorat @relation(fields: [idDirektorat], references: [id])
+
+  negara       Negara[]
+}
+
+model Negara {
+  id           Int       @id @default(autoincrement()) @map("Id_Negara")
+  namaNegara   String    @map("Nama_Negara")
+  kodeNegara   String    @map("Kode_Negara")
+  createdAt    DateTime  @default(now()) @map("Created_At")
+  updatedAt    DateTime  @updatedAt @map("Updated_At")
+
+  idKawasan    Int       @map("Id_Kawasan")
+  kawasan      Kawasan   @relation(fields: [idKawasan], references: [id])
+
+  idDirektorat Int       @map("Id_Direktorat")
+  direktorat   Direktorat @relation(fields: [idDirektorat], references: [id])
+}
