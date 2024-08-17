@@ -1,44 +1,47 @@
 'use client';
 
-import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
+import dynamic from 'next/dynamic';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
+
+// Dynamically import MapContainer and related components with SSR disabled
+const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), { ssr: false });
+const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLayer), { ssr: false });
+const GeoJSON = dynamic(() => import('react-leaflet').then((mod) => mod.GeoJSON), { ssr: false });
 
 const getColorByDirectorat = (idDirektorat) => {
   const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#731F57', '#23A327'];
   return colors[idDirektorat % colors.length];
 };
 
-const Legend = ({ directorates }) => {
-  return (
-    <div style={{
-      position: 'absolute',
-      bottom: '30px',
-      left: '30px',
-      backgroundColor: 'white',
-      padding: '10px',
-      borderRadius: '5px',
-      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-      zIndex: 1000
-    }}>
-      <h4 style={{ margin: '0 0 10px 0', fontSize: '14px' }}>Direktorat</h4>
-      {directorates.map((direktorat, index) => (
-        <div key={direktorat.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <span
-            style={{
-              width: '20px',
-              height: '20px',
-              backgroundColor: getColorByDirectorat(direktorat.id),
-              display: 'inline-block',
-              marginRight: '8px',
-            }}
-          ></span>
-          <span style={{ fontSize: '12px' }}>{direktorat.namaDirektorat}</span>
-        </div>
-      ))}
-    </div>
-  );
-};
+const Legend = ({ directorates }) => (
+  <div style={{
+    position: 'absolute',
+    bottom: '30px',
+    left: '30px',
+    backgroundColor: 'white',
+    padding: '10px',
+    borderRadius: '5px',
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+    zIndex: 1000
+  }}>
+    <h4 style={{ margin: '0 0 10px 0', fontSize: '14px' }}>Direktorat</h4>
+    {directorates.map((direktorat) => (
+      <div key={direktorat.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+        <span
+          style={{
+            width: '20px',
+            height: '20px',
+            backgroundColor: getColorByDirectorat(direktorat.id),
+            display: 'inline-block',
+            marginRight: '8px',
+          }}
+        ></span>
+        <span style={{ fontSize: '12px' }}>{direktorat.namaDirektorat}</span>
+      </div>
+    ))}
+  </div>
+);
 
 const MapWithCountries = () => {
   const [geoData, setGeoData] = useState(null);
@@ -81,8 +84,8 @@ const MapWithCountries = () => {
   const onEachCountry = (country, layer) => {
     const directoratId = country.properties.direktorat?.id;
     const countryName = country.properties.admin;
-    const countryFlagURL = `https://flagcdn.com/w320/${country.properties.iso_a2.toLowerCase()}.png`; // URL untuk flag negara
-    const color = getColorByDirectorat(directoratId);
+    const countryFlagURL = `https://flagcdn.com/w320/${country.properties.iso_a2.toLowerCase()}.png`;
+    const color = getColorByDirectorat(country.direktoratId);
     const randomFillOpacity = [0.6, 0.65, 0.7, 0.75, 0.8];
 
     layer.setStyle({
@@ -96,10 +99,10 @@ const MapWithCountries = () => {
 
     const tooltipContent = `
         <div style="background: white; border: 1px solid #ccc; padding: 10px; border-radius: 5px; text-align: center;">
-            <img src="${countryFlagURL}" alt="${countryName} flag" style="width: 50px; height: auto; margin-left: auto; margin-right: auto; margin-bottom: 5px; border-radius: 3px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);" />
+            <img src="${countryFlagURL}" alt="${countryName} flag" style="width: 50px; height: auto; margin-bottom: 5px; border-radius: 3px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);" />
             <strong style="font-size: 14px;">${countryName}</strong>
-            <p style="font-size: 12px; margin: 3px 0;">${country.properties.kawasan?.namaKawasan}</p>
-            <p style="font-size: 12px; margin: 3px 0;">${country.properties.direktorat?.namaDirektorat}</p>
+            <p style="font-size: 12px; margin: 5px 0;">${country.properties.kawasan?.namaKawasan}</p>
+            <p style="font-size: 12px; margin: 5px 0;">${country.properties.direktorat?.namaDirektorat}</p>
         </div>
     `;
 
