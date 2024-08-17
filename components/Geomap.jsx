@@ -85,7 +85,7 @@ const MapWithCountries = () => {
     const directoratId = country.properties.direktorat?.id;
     const countryName = country.properties.admin;
     const countryFlagURL = `https://flagcdn.com/w320/${country.properties.iso_a2.toLowerCase()}.png`;
-    const color = getColorByDirectorat(country.direktoratId);
+    const color = getColorByDirectorat(directoratId);
     const randomFillOpacity = [0.6, 0.65, 0.7, 0.75, 0.8];
 
     layer.setStyle({
@@ -99,7 +99,7 @@ const MapWithCountries = () => {
 
     const tooltipContent = `
         <div style="background: white; border: 1px solid #ccc; padding: 10px; border-radius: 5px; text-align: center;">
-            <img src="${countryFlagURL}" alt="${countryName} flag" style="width: 50px; height: auto; margin-bottom: 5px; border-radius: 3px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);" />
+            <img src="${countryFlagURL}" alt="${countryName} flag" style="width: 50px; height: auto; margin-left: auto; margin-right: auto; margin-bottom: 5px; border-radius: 3px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);" />
             <strong style="font-size: 14px;">${countryName}</strong>
             <p style="font-size: 12px; margin: 5px 0;">${country.properties.kawasan?.namaKawasan}</p>
             <p style="font-size: 12px; margin: 5px 0;">${country.properties.direktorat?.namaDirektorat}</p>
