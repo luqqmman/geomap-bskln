@@ -3,6 +3,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTable } from 'react-table';
 
+import Loading from '@/components/Loading';
+
 export default function NegaraComponent() {
   const [negaras, setNegaras] = useState([]);
   const [kawasans, setKawasans] = useState([]);
@@ -130,6 +132,8 @@ export default function NegaraComponent() {
     rows,
     prepareRow,
   } = useTable({ columns, data });
+
+  if (!negaras.length) return <Loading />;
 
   return (
     <div className="p-8">

@@ -4,6 +4,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { useTable, usePagination } from 'react-table';
 import Link from 'next/link';
 
+import Loading from './Loading';
+
 export default function NegaraComponent() {
   const [negaras, setNegaras] = useState([]);
   const [pageCount, setPageCount] = useState(0);
@@ -125,6 +127,9 @@ export default function NegaraComponent() {
     },
     usePagination
   );
+
+  if (!negaras.length) return <Loading />
+
 
   return (
     <div className='items-self-left mt-16'>

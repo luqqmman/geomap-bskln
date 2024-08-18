@@ -3,6 +3,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTable } from 'react-table';
 
+import Loading from '@/components/Loading';
+
 export default function DirektoratComponent() {
   const [direktorats, setDirektorats] = useState([]);
   const [newDirektorat, setNewDirektorat] = useState({ namaDirektorat: '' });
@@ -101,6 +103,9 @@ export default function DirektoratComponent() {
     rows,
     prepareRow,
   } = useTable({ columns, data });
+
+
+  if (!direktorats.length) return <Loading />;
 
   return (
     <div className="p-8">

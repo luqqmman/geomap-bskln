@@ -4,6 +4,8 @@ import dynamic from 'next/dynamic';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
 
+import Loading from './Loading';
+
 // Dynamically import MapContainer and related components with SSR disabled
 const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLayer), { ssr: false });
@@ -108,6 +110,8 @@ const MapWithCountries = () => {
 
     layer.bindTooltip(tooltipContent, { className: 'custom-tooltip', direction: 'top', offset: [0, -10] });
   };
+
+  if (!geoData) return <Loading />;
 
   return (
     <div style={{ position: 'relative' }}>

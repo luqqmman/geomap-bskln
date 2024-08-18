@@ -3,6 +3,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTable } from 'react-table';
 
+import Loading from '@/components/Loading';
+
 export default function KawasanComponent() {
   const [kawasans, setKawasans] = useState([]);
   const [direktorats, setDirektorats] = useState([]); // For related Direktorat data
@@ -116,6 +118,8 @@ export default function KawasanComponent() {
     rows,
     prepareRow,
   } = useTable({ columns, data });
+
+  if (!kawasans.length) return <Loading />;
 
   return (
     <div className="p-8">
