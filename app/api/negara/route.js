@@ -57,5 +57,5 @@ export async function DELETE(req) {
         where: { id: idNegara },
     });
 
-    return new Response(null, { status: 204 });
+    return new Response(JSON.stringify({"message" : `successfully delete negara with id ${idNegara}`}), { status: 200 });
 }

@@ -19,13 +19,17 @@ export async function GET(req, { params }) {
     }
 
     const formattedResponse = {
-      id: negara.id_Negara,
+      id: negara.id,
       country_name: negara.namaNegara,
       created_at: new Date(negara.createdAt).toISOString().split('T')[0], 
       direktorat: {
         id: negara.direktorat?.id || null,
-        nama_kawasan: negara.kawasan?.namaKawasan || null,
+        nama_direktorat: negara.direktorat?.namaDirektorat || null,
       },
+      region: {
+        id: negara.kawasan?.id || null,
+        nama_kawasan: negara.kawasan?.namaKawasan || null,
+      }
     };
 
     return new NextResponse(JSON.stringify(formattedResponse), { status: 200, headers: { 'Content-Type': 'application/json' } });
